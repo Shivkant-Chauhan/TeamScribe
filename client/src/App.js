@@ -1,10 +1,10 @@
-import Text_Editor from './components/Text_Editor';
+import TextEditor from './components/TextEditor.jsx';
 import './App.css';
 
 function App() {
   return (
     <div className="App">
-      <Text_Editor></Text_Editor>
+      <TextEditor></TextEditor>
     </div>
   );
 }
