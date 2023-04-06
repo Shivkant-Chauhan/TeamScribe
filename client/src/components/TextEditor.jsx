@@ -49,22 +49,19 @@ function TextEditor() {
     // ytext.setAttribute(0, 'shivkant');
     const val = e.target.value;
 
-    // setSharedText(ytext.toJSON());
-    setSharedText(val);
-  //   console.log('new ytext: ', ytext.toJSON());
-  //   console.log('ytext ', ytext);
-  //   console.log('sha', sharedText);
+    // setSharedText(val);
+    ytext.delete(0, ytext.length);
+    ytext.insert(0, val);
+    console.log("up", ytext.toJSON());
+    setSharedText(ytext.toJSON());
   }
-  // function handleClick() {
-  //   // yarray[0] = "shivkant"; --> not working! should we use ytext that is the sharable text?
-  //   ytext.insert(0, 'shivkant');
-  //   setSharedText(ytext.toJSON());
-  //   console.log('new ytext: ', ytext.toJSON());
-  // }
+
   return (
     <div>
-      <textarea className="editorBox" onChange={(e) => handleChange(e)}>
-        {sharedText}
+      <textarea
+        className="editorBox"
+        onChange={(e) => handleChange(e)}
+        value={sharedText}>
       </textarea>
       {/* <button onClick={() => handleClick()}>click me</button> */}
     </div>
