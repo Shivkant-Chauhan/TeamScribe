@@ -23,8 +23,9 @@ const provider = new WebrtcProvider(
     peerOpts: {}
   }
 );
-const yarray = ydoc.getArray('array');
-// const yarray = ydoc.get('array', Y.Array);
+
+// const yarray = ydoc.getArray('array');
+let ytext = ydoc.getText('text');
 
 provider.on('synced', () => {
   // NOTE: This is only called when a different browser connects to this client
@@ -34,23 +35,38 @@ provider.on('synced', () => {
   console.log('synced!')
 });
 
-yarray.observeDeep(() => {
-  console.log('yarray updated: ', yarray.toJSON())
+ytext.observeDeep(() => {
+  console.log('ytext updated: ', ytext.toJSON())
 });
 
 // yarray.insert(0, ['val']);
 
 function TextEditor() {
-  const [sharedText, setSharedText] = useState(yarray.toJSON());
-  function handleClick() {
+  const [sharedText, setSharedText] = useState(ytext.toJSON());
+  
+  function handleChange(e) {
     // yarray[0] = "shivkant"; --> not working! should we use ytext that is the sharable text?
-    setSharedText(yarray.toJSON());
-    console.log('yarray: ', yarray.toJSON());
+    // ytext.setAttribute(0, 'shivkant');
+    const val = e.target.value;
+
+    // setSharedText(ytext.toJSON());
+    setSharedText(val);
+  //   console.log('new ytext: ', ytext.toJSON());
+  //   console.log('ytext ', ytext);
+  //   console.log('sha', sharedText);
   }
+  // function handleClick() {
+  //   // yarray[0] = "shivkant"; --> not working! should we use ytext that is the sharable text?
+  //   ytext.insert(0, 'shivkant');
+  //   setSharedText(ytext.toJSON());
+  //   console.log('new ytext: ', ytext.toJSON());
+  // }
   return (
-    <div className="editorBox">
-      {sharedText}
-      <button onClick={() => handleClick()}>click me</button>
+    <div>
+      <textarea className="editorBox" onChange={(e) => handleChange(e)}>
+        {sharedText}
+      </textarea>
+      {/* <button onClick={() => handleClick()}>click me</button> */}
     </div>
   );
 }
