@@ -1,3 +1,5 @@
+// TODO: auto-save the document after every 10 seconds -- need to have backend support for this.
+
 import React, { useCallback, useEffect, useState, useRef } from "react";
 // import * as Y from 'yjs';
 // import { WebrtcProvider } from 'y-webrtc';
@@ -36,6 +38,17 @@ function TextEditor() {
   // SOLUTION for this
   // Instead of useEffect, we bind useCallback hook with our editorRef which ensures that the reference is defined before the callback is called. Actually the callback is called when the reference is defined. Understand this as we set the reference to the HTML element and that reference is passed to the callback function. So, the callback function is called when the reference is defined. simple :)
   const [quill, setQuill] = useState();
+  const TOOLBAR_OPTIONS = [
+    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+    [{ font: [] }],
+    [{ list: "ordered" }, { list: "bullet" }],
+    ["bold", "italic", "underline"],
+    [{ color: [] }, { background: [] }],
+    [{ script: "sub" }, { script: "super" }],
+    [{ align: [] }],
+    ["image", "blockquote", "code-block"],
+    ["clean"],
+  ];
   const editorRef = useCallback((editorRef) => {
     if (!editorRef)  return ;
 
@@ -43,7 +56,8 @@ function TextEditor() {
     const editor = document.createElement('div');
     editorRef.append(editor);
     const q = new Quill(editor, {
-      theme: 'snow'
+      theme: 'snow',
+      modules: { toolbar: TOOLBAR_OPTIONS }
     });
 
     q.disable();
